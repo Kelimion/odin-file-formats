@@ -38,6 +38,7 @@ import "core:io"
 import "core:fmt"
 import "core:strings"
 import "../common"
+import "base:runtime"
 
 _string_common :: common._string
 
@@ -48,7 +49,8 @@ string_builder: strings.Builder
 global_writer:  io.Writer
 
 @(init)
-_init_string_builder :: proc() {
+_init_string_builder :: proc "contextless" () {
+	context = runtime.default_context()
 	strings.builder_init(&string_builder)
 	global_writer = strings.to_writer(&string_builder)
 }
